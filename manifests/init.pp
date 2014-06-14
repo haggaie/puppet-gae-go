@@ -28,9 +28,9 @@ class gae-go {
 	}
 
 	exec { "unzip-gae":
-		command => "/usr/bin/unzip ${filename} && chmod 755 go_appengine",
+		command => "/usr/bin/unzip ${filename} && find go_appengine -perm -g+r -exec sudo chmod o+r '{}' ';' && find  go_appengine -perm -g+x -exec sudo chmod o+x '{}' ';'",
 		cwd     => "/usr/local/src/",
-		creates => "/usr/local/src/google_appengine",
+		creates => "/usr/local/src/go_appengine",
 		umask   => "2",
 		require => [Exec["grab-gaesdk"], Package["unzip"]]
 	}
